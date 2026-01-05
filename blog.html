@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Blog | aCloudResume</title>
+  <meta name="description" content="Blogs and notes on AWS, Serverless, DevOps and AI." />
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#111827" />
+  <link rel="icon" href="favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{--aws-orange:#FF9900;--aws-slate:#232F3E;--aws-blue:#146EB4;}
+    body{background: linear-gradient(180deg,#f8fafc 0%, #ffffff 45%, #f8fafc 100%);}
+    .glass{background: rgba(255,255,255,.75); backdrop-filter: blur(10px);}
+  </style>
+
+</head>
+<body class="text-slate-900">
+
+  <header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/70 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="h-16 flex items-center justify-between">
+        <a href="index.html" class="font-extrabold tracking-tight text-slate-900">
+          aCloudResume <span class="text-slate-400 font-semibold">/</span> <span class="text-slate-700">Subhash Bohra</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-2 text-sm">
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="blog.html">Blog</a>
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="aws-updates.html">AWS Weekly Updates</a>
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="#projects">Projects</a>
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="#contact">Contact</a>
+          <a class="ml-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-white font-semibold shadow-sm"
+             style="background: var(--aws-slate)" href="resume.pdf" target="_blank" rel="noreferrer">
+             Download Resume
+          </a>
+        </nav>
+        <a class="md:hidden px-3 py-2 rounded-xl border border-slate-200" href="aws-updates.html">Updates</a>
+      </div>
+    </div>
+  </header>
+
+<main class="max-w-6xl mx-auto px-4 py-10">
+  <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+    <div>
+      <h1 class="text-4xl font-extrabold tracking-tight">Blog</h1>
+      <p class="mt-2 text-slate-600">Weekly learning notes, architecture breakdowns, and hands-on labs. Cross-posted to Dev.to.</p>
+    </div>
+    <div class="glass rounded-2xl border border-slate-200 p-4 w-full lg:w-[420px]">
+      <div class="text-sm font-semibold">Update content</div>
+      <p class="mt-2 text-sm text-slate-600">Edit <code>data/posts.json</code> and <code>data/linkedin-reviews.json</code> — no HTML changes needed.</p>
+    </div>
+  </div>
+
+  <section class="mt-10">
+    <h2 class="text-2xl font-bold">Latest posts</h2>
+    <div id="posts" class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="text-2xl font-bold">LinkedIn reviews</h2>
+    <p class="mt-1 text-slate-600">Social proof from people I've worked with.</p>
+    <div id="reviews" class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+</main>
+
+  <footer class="mt-16 border-t border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-10 text-sm text-slate-600 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+      <div>© <span id="year"></span> aCloudResume · Built on AWS (S3 + CloudFront) · Serverless-first</div>
+      <div class="flex items-center gap-3">
+        <a class="hover:underline" href="https://www.linkedin.com/in/subhashbohra" target="_blank" rel="noreferrer">LinkedIn</a>
+        <span class="text-slate-300">•</span>
+        <a class="hover:underline" href="https://github.com/subhashbohra" target="_blank" rel="noreferrer">GitHub</a>
+        <span class="text-slate-300">•</span>
+        <a class="hover:underline" href="aws-updates.html">AWS Weekly Updates</a>
+      </div>
+    </div>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  </footer>
+
+<script src="js/blog.js"></script>
+</body>
+</html>

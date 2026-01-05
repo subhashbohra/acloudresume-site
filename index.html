@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>aCloudResume | Subhash Bohra</title>
+  <meta name="description" content="Cloud + DevOps + Serverless builder. AWS Community Builder (Serverless). Kubernetes, CI/CD, Observability and AI automation." />
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#111827" />
+  <link rel="icon" href="favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{--aws-orange:#FF9900;--aws-slate:#232F3E;--aws-blue:#146EB4;}
+    body{background: linear-gradient(180deg,#f8fafc 0%, #ffffff 45%, #f8fafc 100%);}
+    .glass{background: rgba(255,255,255,.75); backdrop-filter: blur(10px);}
+  </style>
+
+</head>
+<body class="text-slate-900">
+
+  <header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/70 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="h-16 flex items-center justify-between">
+        <a href="index.html" class="font-extrabold tracking-tight text-slate-900">
+          aCloudResume <span class="text-slate-400 font-semibold">/</span> <span class="text-slate-700">Subhash Bohra</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-2 text-sm">
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="blog.html">Blog</a>
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="aws-updates.html">AWS Weekly Updates</a>
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="#projects">Projects</a>
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="#contact">Contact</a>
+          <a class="ml-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-white font-semibold shadow-sm"
+             style="background: var(--aws-slate)" href="resume.pdf" target="_blank" rel="noreferrer">
+             Download Resume
+          </a>
+        </nav>
+        <a class="md:hidden px-3 py-2 rounded-xl border border-slate-200" href="aws-updates.html">Updates</a>
+      </div>
+    </div>
+  </header>
+
+
+<main class="max-w-6xl mx-auto px-4">
+  <section class="py-12 md:py-16">
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white text-xs text-slate-600">
+          <span class="h-2 w-2 rounded-full" style="background: var(--aws-orange)"></span>
+          AWS Community Builder · Serverless
+        </div>
+        <h1 class="mt-4 text-5xl font-extrabold tracking-tight leading-tight">
+          Cloud • DevOps • Serverless —<br class="hidden md:block" />
+          shipped like a product. Date
+        </h1>
+        <p class="mt-4 text-slate-600 text-lg">
+          I build resilient platforms on AWS: CI/CD, Kubernetes, serverless architectures, observability, and practical GenAI automation for engineering teams.
+        </p>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="aws-updates.html" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-white font-semibold shadow-sm" style="background: var(--aws-slate)">
+            AWS Weekly Updates <span aria-hidden="true">→</span>
+          </a>
+          <a href="blog.html" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-slate-200 bg-white font-semibold hover:bg-slate-50">
+            Read blog <span aria-hidden="true">→</span>
+          </a>
+          <a href="#projects" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-slate-200 bg-white font-semibold hover:bg-slate-50">
+            View projects
+          </a>
+        </div>
+
+        <div class="mt-6 flex items-center gap-3 text-sm text-slate-600">
+          <div class="px-3 py-2 rounded-2xl border border-slate-200 bg-white">
+            Visitors: <span id="visitorCount" class="font-semibold">—</span>
+          </div>
+          <a class="px-3 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50" href="https://github.com/subhashbohra" target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+          <a class="px-3 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50" href="https://www.linkedin.com/in/subhashbohra" target="_blank" rel="noreferrer">
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div class="absolute -inset-2 rounded-[28px] bg-gradient-to-br from-orange-100 to-slate-100 blur-2xl opacity-70"></div>
+        <div class="relative bg-white rounded-[28px] border border-slate-200 shadow-sm p-6">
+          <div class="flex items-center gap-4">
+            <img src="assets/profile.svg" alt="Profile" class="h-16 w-16 rounded-2xl object-cover border border-slate-200" />
+            <div>
+              <div class="text-xl font-bold">Subhash Bohra</div>
+              <div class="text-slate-600">Cloud / DevOps · Serverless · Kubernetes</div>
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-2 gap-4">
+            <div class="rounded-2xl border border-slate-200 p-4">
+              <div class="text-sm text-slate-600">Focus</div>
+              <div class="mt-1 font-semibold">Serverless & Platforms</div>
+            </div>
+            <div class="rounded-2xl border border-slate-200 p-4">
+              <div class="text-sm text-slate-600">Now building</div>
+              <div class="mt-1 font-semibold">AWS Weekly Updates</div>
+            </div>
+            <div class="rounded-2xl border border-slate-200 p-4">
+              <div class="text-sm text-slate-600">Stack</div>
+              <div class="mt-1 font-semibold">S3 · CloudFront · Lambda</div>
+            </div>
+            <div class="rounded-2xl border border-slate-200 p-4">
+              <div class="text-sm text-slate-600">Cred</div>
+              <div class="mt-1 font-semibold">AWS Community Builder</div>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="text-xs px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50">Lambda</span>
+            <span class="text-xs px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50">EventBridge</span>
+            <span class="text-xs px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50">EKS</span>
+            <span class="text-xs px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50">GitHub Actions</span>
+            <span class="text-xs px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50">Observability</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="py-10">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h2 class="text-3xl font-extrabold">Projects</h2>
+        <p class="mt-2 text-slate-600">Hands-on builds that show real architecture choices and tradeoffs.</p>
+      </div>
+      <a href="blog.html" class="text-sm font-semibold hover:underline" style="color: var(--aws-blue)">See write-ups →</a>
+    </div>
+
+    <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition">
+        <div class="text-xs text-slate-500">Serverless</div>
+        <h3 class="mt-2 text-lg font-semibold">AWS Weekly Updates (RSS → AI → UI)</h3>
+        <p class="mt-2 text-sm text-slate-600">Automated pipeline that fetches AWS releases, generates summaries & images, and serves a weekly UI.</p>
+        <div class="mt-4 flex items-center gap-2">
+          <a href="aws-updates.html" class="px-3 py-2 rounded-xl text-white font-semibold" style="background: var(--aws-slate)">Open</a>
+        </div>
+      </article>
+
+      <article class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition">
+        <div class="text-xs text-slate-500">DevOps</div>
+        <h3 class="mt-2 text-lg font-semibold">Visitor Counter (API + DynamoDB)</h3>
+        <p class="mt-2 text-sm text-slate-600">Serverless visitor counter with safe local fallback and CloudFront-friendly caching.</p>
+        <div class="mt-4 text-xs text-slate-500">Connect via <code>window.VISITOR_API</code></div>
+      </article>
+
+      <article class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition">
+        <div class="text-xs text-slate-500">Kubernetes</div>
+        <h3 class="mt-2 text-lg font-semibold">CKA practice & cluster ops notes</h3>
+        <p class="mt-2 text-sm text-slate-600">Real-world admin tasks: HPA, storage, ingress, troubleshooting, and GitOps-ready manifests.</p>
+        <div class="mt-4">
+          <a href="blog.html" class="text-sm font-semibold hover:underline" style="color: var(--aws-blue)">Read →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="py-10">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h2 class="text-3xl font-extrabold">LinkedIn reviews</h2>
+        <p class="mt-2 text-slate-600">Social proof — this loads from <code>data/linkedin-reviews.json</code>.</p>
+      </div>
+      <a href="blog.html" class="text-sm font-semibold hover:underline" style="color: var(--aws-blue)">View all →</a>
+    </div>
+    <div id="homeReviews" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <section id="contact" class="py-10">
+    <div class="bg-white rounded-[28px] border border-slate-200 shadow-sm p-8">
+      <h2 class="text-3xl font-extrabold">Contact</h2>
+      <p class="mt-2 text-slate-600">For consulting, collaborations, or roles in Cloud/DevOps/Serverless.</p>
+      <div class="mt-6 grid md:grid-cols-3 gap-4 text-sm">
+        <div class="rounded-2xl border border-slate-200 p-4">
+          <div class="text-slate-500">Email</div>
+          <div class="mt-1 font-semibold">add-your-email@domain.com</div>
+        </div>
+        <div class="rounded-2xl border border-slate-200 p-4">
+          <div class="text-slate-500">LinkedIn</div>
+          <a class="mt-1 font-semibold hover:underline" style="color: var(--aws-blue)" href="https://www.linkedin.com/in/subhashbohra" target="_blank" rel="noreferrer">www.linkedin.com/in/subhashbohra</a>
+        </div>
+        <div class="rounded-2xl border border-slate-200 p-4">
+          <div class="text-slate-500">GitHub</div>
+          <a class="mt-1 font-semibold hover:underline" style="color: var(--aws-blue)" href="https://github.com/subhashbohra" target="_blank" rel="noreferrer">github.com/subhashbohra</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Optional: set this after you deploy your visitor counter API
+  // window.VISITOR_API = "https://YOUR_API_ID.execute-api.ap-south-1.amazonaws.com/count";
+</script>
+<script src="js/visitor.js"></script>
+<script src="js/home.js"></script>
+
+
+  <footer class="mt-16 border-t border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-10 text-sm text-slate-600 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+      <div>© <span id="year"></span> aCloudResume · Built on AWS (S3 + CloudFront) · Serverless-first</div>
+      <div class="flex items-center gap-3">
+        <a class="hover:underline" href="https://www.linkedin.com/in/subhashbohra" target="_blank" rel="noreferrer">LinkedIn</a>
+        <span class="text-slate-300">•</span>
+        <a class="hover:underline" href="https://github.com/subhashbohra" target="_blank" rel="noreferrer">GitHub</a>
+        <span class="text-slate-300">•</span>
+        <a class="hover:underline" href="aws-updates.html">AWS Weekly Updates</a>
+      </div>
+    </div>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  </footer>
+
+</body>
+</html>

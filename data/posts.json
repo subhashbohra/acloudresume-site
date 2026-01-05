@@ -1,0 +1,24 @@
+[
+  {
+    "title": "Why I'm ditching EC2 for Lambda in 2025 (real cost comparison)",
+    "date": "2026-01-04",
+    "description": "A hands-on comparison from real workloads + when EC2 still wins.",
+    "url": "https://dev.to/",
+    "tags": [
+      "Serverless",
+      "Lambda",
+      "Cost"
+    ]
+  },
+  {
+    "title": "API Gateway vs ALB vs Function URLs (with diagrams)",
+    "date": "2026-01-02",
+    "description": "A practical decision guide for production systems.",
+    "url": "https://dev.to/",
+    "tags": [
+      "API",
+      "Architecture",
+      "AWS"
+    ]
+  }
+]

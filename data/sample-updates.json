@@ -1,0 +1,134 @@
+[
+  {
+    "title": "Lambda: improved concurrency controls for burst traffic",
+    "link": "https://aws.amazon.com/new/",
+    "publishedAt": "2026-01-05T06:00:00Z",
+    "category": "Serverless",
+    "tags": [
+      "Lambda",
+      "Scaling"
+    ],
+    "summary": "More predictable scaling knobs for spiky workloads.",
+    "imageUrl": "assets/sample-card.svg"
+  },
+  {
+    "title": "EventBridge: new filtering capability for event buses",
+    "link": "https://aws.amazon.com/new/",
+    "publishedAt": "2026-01-05T09:00:00Z",
+    "category": "Serverless",
+    "tags": [
+      "EventBridge",
+      "Routing"
+    ],
+    "summary": "Cleaner routing rules without extra glue code.",
+    "imageUrl": "assets/sample-card.svg"
+  },
+  {
+    "title": "Step Functions: better observability for long workflows",
+    "link": "https://aws.amazon.com/new/",
+    "publishedAt": "2026-01-06T06:00:00Z",
+    "category": "Serverless",
+    "tags": [
+      "Step Functions",
+      "Tracing"
+    ],
+    "summary": "Faster debugging when state machines get complex.",
+    "imageUrl": "assets/sample-card.svg"
+  },
+  {
+    "title": "Bedrock: guardrail enhancements for enterprise prompts",
+    "link": "https://aws.amazon.com/new/",
+    "publishedAt": "2026-01-06T08:00:00Z",
+    "category": "AI & GenAI",
+    "tags": [
+      "Bedrock",
+      "Guardrails"
+    ],
+    "summary": "Safer outputs with stronger policy controls.",
+    "imageUrl": "assets/sample-card.svg"
+  },
+  {
+    "title": "Amazon Q: new agent orchestration improvements",
+    "link": "https://aws.amazon.com/new/",
+    "publishedAt": "2026-01-07T06:00:00Z",
+    "category": "AI Agents",
+    "tags": [
+      "Amazon Q",
+      "Agents"
+    ],
+    "summary": "Higher success rate for multi-step automations.",
+    "imageUrl": "assets/sample-card.svg"
+  },
+  {
+    "title": "CloudWatch: alerting UX improvements for SRE teams",
+    "link": "https://aws.amazon.com/new/",
+    "publishedAt": "2026-01-07T10:00:00Z",
+    "category": "DevOps & Observability",
+    "tags": [
+      "CloudWatch",
+      "Alarms"
+    ],
+    "summary": "Tighter incident loop with smarter alert context.",
+    "imageUrl": "assets/sample-card.svg"
+  },
+  {
+    "title": "EKS: add-on updates for smoother cluster upgrades",
+    "link": "https://aws.amazon.com/new/",
+    "publishedAt": "2026-01-08T06:00:00Z",
+    "category": "Containers & Kubernetes",
+    "tags": [
+      "EKS",
+      "Upgrades"
+    ],
+    "summary": "Reduce upgrade risk with better version alignment.",
+    "imageUrl": "assets/sample-card.svg"
+  },
+  {
+    "title": "IAM: policy insights update for faster least-privilege",
+    "link": "https://aws.amazon.com/new/",
+    "publishedAt": "2026-01-09T06:00:00Z",
+    "category": "Security",
+    "tags": [
+      "IAM",
+      "Security"
+    ],
+    "summary": "Quicker tightening of permissions with recommendations.",
+    "imageUrl": "assets/sample-card.svg"
+  },
+  {
+    "title": "S3: new analytics view for storage optimization",
+    "link": "https://aws.amazon.com/new/",
+    "publishedAt": "2025-12-30T10:00:00Z",
+    "category": "Storage",
+    "tags": [
+      "S3",
+      "Cost"
+    ],
+    "summary": "Spot cost hotspots and optimize lifecycle rules.",
+    "imageUrl": "assets/sample-card.svg"
+  },
+  {
+    "title": "Networking: improvements to VPC endpoint management",
+    "link": "https://aws.amazon.com/new/",
+    "publishedAt": "2026-01-01T10:00:00Z",
+    "category": "Networking",
+    "tags": [
+      "VPC",
+      "Endpoints"
+    ],
+    "summary": "Easier governance for private connectivity.",
+    "imageUrl": "assets/sample-card.svg"
+  },
+  {
+    "title": "Athena: performance improvements for common queries",
+    "link": "https://aws.amazon.com/new/",
+    "publishedAt": "2026-01-02T10:00:00Z",
+    "category": "Data & Analytics",
+    "tags": [
+      "Athena",
+      "Analytics"
+    ],
+    "summary": "Faster time-to-insight for typical workloads.",
+    "imageUrl": "assets/sample-card.svg"
+  }
+]
