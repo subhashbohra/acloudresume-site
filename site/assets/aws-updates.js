@@ -7,9 +7,17 @@ const BRAND_CATEGORIES = [
   "Containers & Kubernetes","Security","Data & Analytics","Databases","Storage","Networking","Other"
 ];
 
-const state = { items: [], filtered: [], category:"All", query:"", source:"sample", apiUrl:"", page:1, pageSize:12 };
+const state = { items: [], filtered: [], category:"All", query:"", source:"api", apiUrl:"", apiBase:"", week:"", page:1, pageSize:12 };
 const el = (id)=>document.getElementById(id);
 const safe = (s)=>(s||"").toString().replace(/[<>]/g,"");
+
+async function loadSiteConfig(){
+  try{
+    const res = await fetch("data/site-config.json", { cache: "no-store" });
+    if(!res.ok) return {};
+    return await res.json();
+  }catch(e){ return {}; }
+}
 
 function fmtDate(iso){
   try{ return new Date(iso).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"2-digit"}); }catch{ return iso||""; }
@@ -40,7 +48,7 @@ function weekRangeLabel(weekKey){
 }
 function weekKeyFromQueryOrNow(){
   const p=new URLSearchParams(window.location.search);
-  return p.get("week") || isoWeekKey(new Date());
+  return state.week || p.get("week") || isoWeekKey(new Date());
 }
 
 function categoryBadge(category){
@@ -76,6 +84,7 @@ function normalize(items){
     const publishedAt=x.publishedAt||x.published_at||x.published||new Date().toISOString();
     const wk=x.weekKey||x.week_key||isoWeekKey(new Date(publishedAt));
     return {
+      updateId: x.updateId||x.id||x.guid||"",
       title:x.title, link:x.link, publishedAt, weekKey:wk,
       category:x.category||"Other", tags:x.tags||[],
       summary:x.summary||x.shortSummary||"",
@@ -107,7 +116,8 @@ function cardHtml(it){
          <div class="text-xs text-slate-500 px-6 text-center">Image appears once backend enables Bedrock generation.</div>
        </div>`;
   const tags=(it.tags||[]).slice(0,4).map(t=>`<span class="text-xs px-2 py-1 rounded-lg bg-slate-100 text-slate-700">${safe(t)}</span>`).join("");
-  const share=buildShareLinks(it.link||"https://acloudresume.com/aws-updates.html");
+  const canonical = `${(window.SITE_BASE_URL||"https://acloudresume.com")}/aws-updates.html?week=${encodeURIComponent(it.weekKey||weekKeyFromQueryOrNow())}${it.updateId?`&id=${encodeURIComponent(it.updateId)}`:""}`;
+  const share=buildShareLinks(canonical);
   return `
   <article class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 flex flex-col gap-3 hover:shadow-md transition">
     ${img}
@@ -244,7 +254,10 @@ function weeklySummaryText(items){
   lines.push("");
   Object.keys(byCat).forEach(cat=>{
     lines.push(`${icon[cat]||"🗞️"} ${cat}`);
-    byCat[cat].slice(0,5).forEach(x=>lines.push(`• ${x.title} — ${x.link}`));
+    byCat[cat].slice(0,5).forEach(x=>{
+      const canonical = `${(window.SITE_BASE_URL||"https://acloudresume.com")}/aws-updates.html?week=${encodeURIComponent(wk)}${x.updateId?`&id=${encodeURIComponent(x.updateId)}`:""}`;
+      lines.push(`• ${x.title} — ${canonical}`);
+    });
     lines.push("");
   });
   lines.push(`🔗 Full list: https://acloudresume.com/aws-updates.html?week=${wk}`);
@@ -294,7 +307,23 @@ function renderAll(){
   renderThisWeek(items);
   renderPastWeeks(items);
 }
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener("DOMContentLoaded", async ()=>{
+  const cfg = await loadSiteConfig();
+  window.SITE_BASE_URL = cfg.siteBaseUrl || window.SITE_BASE_URL || "https://acloudresume.com";
+
+  state.apiBase = cfg.apiBaseUrl || "";
+  state.apiUrl = state.apiBase ? (state.apiBase + (cfg.updatesApiPath||"/updates")) : "";
+  state.week = weekKeyFromQueryOrNow(); // resolves state.week first
+
+  // Wire visitor API config for visitor.js
+  if(cfg.apiBaseUrl && cfg.visitorApiPath){
+    window.VISITOR_API = cfg.apiBaseUrl + cfg.visitorApiPath + "?path=" + encodeURIComponent(location.pathname);
+  }
+
+  // Hide "Data Source" UI if apiBaseUrl is configured
+  const sourceWrap = document.getElementById("source-wrap");
+  if(sourceWrap && cfg.apiBaseUrl){ sourceWrap.classList.add("hidden"); }
+
   bindTabs();
   bindControls();
   renderAll();

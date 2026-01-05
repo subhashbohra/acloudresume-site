@@ -1,0 +1,8 @@
+{
+  "apiBaseUrl": "https://ejlppub2ah.execute-api.us-east-1.amazonaws.com/prod",
+  "visitorApiPath": "/visitor",
+  "updatesApiPath": "/updates",
+  "weeksApiPath": "/weeks",
+  "siteBaseUrl": "https://acloudresume.com",
+  "generatedImagesPrefix": "/assets/generated/"
+}

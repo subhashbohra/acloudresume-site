@@ -1,0 +1,15 @@
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "acloudresume-updates"
+resolve_s3 = true
+s3_prefix = "acloudresume-updates"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+parameter_overrides = "SiteBucketName=\"acloudresume\" SiteBaseUrl=\"https://acloudresume.com\" RssFeedUrl=\"https://aws.amazon.com/about-aws/whats-new/recent/feed/\" TextModelId=\"amazon.titan-text-express-v1\" ImageModelId=\"amazon.titan-image-generator-v1\""
+image_repositories = []
+
+[default.global.parameters]
+region = "us-east-1"
