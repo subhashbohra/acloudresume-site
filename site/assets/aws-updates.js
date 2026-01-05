@@ -11,6 +11,30 @@ const state = { items: [], filtered: [], category:"All", query:"", source:"api",
 const el = (id)=>document.getElementById(id);
 const safe = (s)=>(s||"").toString().replace(/[<>]/g,"");
 
+async function initFromConfig(){
+  try{
+    const res = await fetch("data/site-config.json", { cache: "no-store" });
+    if(!res.ok) return;
+
+    const cfg = await res.json();
+    const c = cfg?.awsUpdates || {};
+    if(c.siteBaseUrl) state.siteBaseUrl = c.siteBaseUrl;
+
+    if(c.apiUrl){
+      state.apiUrl = c.apiUrl;
+      state.source = (c.defaultSource || "api");
+    }
+
+    // reflect in UI
+    const sourceSelect = el("source-select");
+    const apiInput = el("api-url");
+    if(sourceSelect) sourceSelect.value = state.source;
+    if(apiInput) apiInput.value = state.apiUrl;
+    if(state.source === "api") apiInput?.classList.remove("hidden");
+  }catch(e){}
+}
+
+
 async function loadSiteConfig(){
   try{
     const res = await fetch("data/site-config.json", { cache: "no-store" });
@@ -285,6 +309,8 @@ function bindControls(){
     try{ await navigator.clipboard.writeText(v); el("btn-copy-weekly").textContent="Copied"; setTimeout(()=>el("btn-copy-weekly").textContent="Copy",800); }catch{ alert("Copy failed"); }
   });
 }
+
+await initFromConfig();
 
 async function refresh(){
   try{
