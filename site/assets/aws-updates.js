@@ -4,7 +4,7 @@
  * - Generates weekly LinkedIn summary (selected week)
  * - Share buttons share YOUR website card URL
  */
-state.source = "api";
+
 const BRAND_CATEGORIES = [
   "All","Serverless","AI & GenAI","AI Agents","DevOps & Observability",
   "Containers & Kubernetes","Security","Data & Analytics","Databases","Storage","Networking","Other"
@@ -294,7 +294,7 @@ async function refresh(){
         state.selectedWeek ||
         new URLSearchParams(location.search).get("week") ||
         isoWeekKey(new Date());
-
+        state.selectedWeek = wk;  // ✅ ADD THIS LINE
       const apiUrl = `${state.apiUrl}?week=${encodeURIComponent(wk)}`;
 
       const res = await fetch(apiUrl, { cache:"no-store" });
@@ -303,6 +303,13 @@ async function refresh(){
         throw new Error(`API error ${res.status}: ${txt}`);
       }
       data = await res.json();
+      // ✅ Force weekKey for rendering consistency even if backend doesn't return it or formats it differently
+      if (Array.isArray(data)) {
+        data = data.map(x => ({ ...x, weekKey: wk }));
+      } else if (data?.items && Array.isArray(data.items)) {
+        data.items = data.items.map(x => ({ ...x, weekKey: wk }));
+      }
+
     }
 
 
