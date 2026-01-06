@@ -286,16 +286,25 @@ async function refresh(){
 
     let data = [];
     if(state.source === "api"){
-      const url = state.apiUrl || "";
-      if(!url) throw new Error("API URL is empty. Set data/site-config.json or paste API URL in the UI.");
-      const res = await fetch(url, { cache:"no-store" });
-      if(!res.ok) throw new Error(`API error: ${res.status}`);
-      data = await res.json();
-    } else {
-      const res = await fetch("data/sample-updates.json", { cache:"no-store" });
-      if(!res.ok) throw new Error("Missing data/sample-updates.json");
+      if(!state.apiUrl){
+        throw new Error("API URL is empty. Set data/site-config.json");
+      }
+
+      const wk =
+        state.selectedWeek ||
+        new URLSearchParams(location.search).get("week") ||
+        isoWeekKey(new Date());
+
+      const apiUrl = `${state.apiUrl}?week=${encodeURIComponent(wk)}`;
+
+      const res = await fetch(apiUrl, { cache:"no-store" });
+      if(!res.ok){
+        const txt = await res.text();
+        throw new Error(`API error ${res.status}: ${txt}`);
+      }
       data = await res.json();
     }
+
 
     state.items = normalize(data);
     applyFilters();
