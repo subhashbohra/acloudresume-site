@@ -11,28 +11,6 @@ const state = { items: [], filtered: [], category:"All", query:"", source:"api",
 const el = (id)=>document.getElementById(id);
 const safe = (s)=>(s||"").toString().replace(/[<>]/g,"");
 
-async function initFromConfig(){
-  try{
-    const res = await fetch("data/site-config.json", { cache: "no-store" });
-    if(!res.ok) return;
-
-    const cfg = await res.json();
-    const c = cfg?.awsUpdates || {};
-    if(c.siteBaseUrl) state.siteBaseUrl = c.siteBaseUrl;
-
-    if(c.apiUrl){
-      state.apiUrl = c.apiUrl;
-      state.source = (c.defaultSource || "api");
-    }
-
-    // reflect in UI
-    const sourceSelect = el("source-select");
-    const apiInput = el("api-url");
-    if(sourceSelect) sourceSelect.value = state.source;
-    if(apiInput) apiInput.value = state.apiUrl;
-    if(state.source === "api") apiInput?.classList.remove("hidden");
-  }catch(e){}
-}
 
 
 async function loadSiteConfig(){
@@ -312,6 +290,30 @@ function bindControls(){
 
 await initFromConfig();
 
+async function initFromConfig(){
+  try{
+    const res = await fetch("data/site-config.json", { cache: "no-store" });
+    if(!res.ok) return;
+    const cfg = await res.json();
+    const c = cfg?.awsUpdates || {};
+
+    if(c.siteBaseUrl) state.siteBaseUrl = c.siteBaseUrl;
+    if(c.apiUrl) state.apiUrl = c.apiUrl;
+    if(c.defaultSource) state.source = c.defaultSource;
+
+    // reflect into UI
+    const sourceSelect = document.getElementById("source-select");
+    const apiInput = document.getElementById("api-url");
+    if(sourceSelect) sourceSelect.value = state.source;
+    if(apiInput) apiInput.value = state.apiUrl;
+
+    if(state.source === "api" && apiInput){
+      apiInput.classList.remove("hidden");
+    }
+  } catch(e){}
+}
+
+
 async function refresh(){
   try{
     el("btn-refresh").disabled=true;
@@ -334,6 +336,7 @@ function renderAll(){
   renderPastWeeks(items);
 }
 document.addEventListener("DOMContentLoaded", async ()=>{
+  await initFromConfig();   // ✅ add this
   const cfg = await loadSiteConfig();
   window.SITE_BASE_URL = cfg.siteBaseUrl || window.SITE_BASE_URL || "https://acloudresume.com";
 

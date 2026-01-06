@@ -6,3 +6,11 @@
   "siteBaseUrl": "https://acloudresume.com",
   "generatedImagesPrefix": "/assets/generated/"
 }
+
+{
+  "awsUpdates": {
+    "defaultSource": "api",
+    "apiUrl": "https://ejlppub2ah.execute-api.us-east-1.amazonaws.com/prod/updates",
+    "siteBaseUrl": "https://acloudresume.com"
+  }
+}
