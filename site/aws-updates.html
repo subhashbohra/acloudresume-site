@@ -65,15 +65,7 @@
         <button id="btn-copy-weekly" class="px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">Copy</button>
         <button id="btn-refresh" class="ml-auto px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">Refresh</button>
       </div>
-      <div class="mt-3 text-[11px] text-slate-500">
-        Data source:
-        <select id="source-select" class="ml-2 text-xs border border-slate-200 rounded-lg px-2 py-1">
-          <option value="sample">Sample</option>
-          <option value="api">API</option>
-        </select>
-        <input id="api-url" class="hidden mt-2 w-full text-xs border border-slate-200 rounded-lg px-2 py-2" placeholder="https://ejlppub2ah.execute-api.us-east-1.amazonaws.com/prod" />
-        <div class="mt-1">Use <b>Sample</b> for local testing. Use <b>API</b> after deploying the backend.</div>
-      </div>
+     
     </div>
   </div>
 
@@ -82,12 +74,38 @@
       <div class="text-sm text-slate-600">This week: <span id="count">0</span> updates</div>
       <div class="text-sm text-slate-600" id="this-week-range">—</div>
     </div>
-    <div class="flex items-center gap-2">
-      <input id="search" class="w-full md:w-[320px] rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="Search: bedrock, lambda, eks, eventbridge…" />
-      <button id="btn-share-week" class="text-sm px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">Share week</button>
-      <button id="btn-prev" class="text-sm px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">Prev</button>
-      <button id="btn-next" class="text-sm px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">Next</button>
+    <div class="flex flex-wrap items-center gap-2">
+      <input
+        id="search"
+        class="w-full md:w-[260px] rounded-xl border border-slate-200 px-3 py-2 text-sm"
+        placeholder="Search: bedrock, lambda, eks, eventbridge…" />
+
+      <!-- Week selector (FIX) -->
+      <select
+        id="week-select"
+        class="text-sm rounded-xl border border-slate-200 px-3 py-2 bg-white">
+        <option value="">This week</option>
+      </select>
+
+      <button
+        id="btn-share-week"
+        class="text-sm px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">
+        Share week
+      </button>
+
+      <button
+        id="btn-prev"
+        class="text-sm px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">
+        Prev
+      </button>
+
+      <button
+        id="btn-next"
+        class="text-sm px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">
+        Next
+      </button>
     </div>
+
   </div>
 
   <div id="top-picks-wrap" class="hidden mt-8">
