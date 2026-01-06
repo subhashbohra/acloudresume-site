@@ -260,24 +260,36 @@ function renderAll(){
 
 async function initFromConfig(){
   try{
-    const res = await fetch("data/site-config.json", { cache:"no-store" });
-    if(!res.ok) return;
+    const res = await fetch("data/site-config.json", { cache: "no-store" });
+
+    if(!res.ok){
+      console.warn("site-config.json not found:", res.status);
+      return;
+    }
+
     const cfg = await res.json();
     const c = cfg?.awsUpdates || {};
-    if(c.siteBaseUrl) state.siteBaseUrl = c.siteBaseUrl;
-    if(c.apiUrl) state.apiUrl = c.apiUrl;
-    if(c.defaultSource) state.source = c.defaultSource;
-    state.apiUrl = c.apiUrl;
+
+    // Only apply if present
+    if (typeof c.siteBaseUrl === "string" && c.siteBaseUrl.trim()) {
+      state.siteBaseUrl = c.siteBaseUrl.trim().replace(/\/$/, "");
+    }
+
+    if (typeof c.apiUrl === "string" && c.apiUrl.trim()) {
+      state.apiUrl = c.apiUrl.trim().replace(/\/$/, ""); // keep clean
+    }
+
+    // In production, force API mode
     state.source = "api";
 
-    // reflect UI
-    const sourceSelect = el("source-select");
+    // Optional: keep hidden input synced (if you kept it)
     const apiInput = el("api-url");
-    if(sourceSelect) sourceSelect.value = state.source;
-    if(apiInput) apiInput.value = state.apiUrl;
-    if(state.source==="api") apiInput?.classList.remove("hidden");
-  }catch(e){}
+    if (apiInput) apiInput.value = state.apiUrl || "";
+  } catch (e) {
+    console.error("initFromConfig failed:", e);
+  }
 }
+
 
 async function refresh(){
   try{
@@ -373,6 +385,10 @@ function bindControls(){
 
 document.addEventListener("DOMContentLoaded", async ()=>{
   await initFromConfig();
+  if (!state.apiUrl) {
+    state.apiUrl = "https://ejlppub2ah.execute-api.us-east-1.amazonaws.com/prod/updates";
+  }
+
   renderTabs();
   bindControls();
   await refresh();
