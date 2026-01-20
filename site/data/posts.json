@@ -1,4 +1,16 @@
 [
+  
+  .{
+    "title": "Building a Serverless GenAI Chatbot using Amazon Bedrock & Amazon Kendra (Hands-on RAG Workshop)",
+    "date": "2026-01-14",
+    "description": "A hands-on comparison from real workloads + when EC2 still wins.",
+    "url": "https://dev.to/subhashbohra/building-a-serverless-genai-chatbot-using-amazon-bedrock-amazon-kendra-hands-on-rag-workshop-3ln3",
+    "tags": [
+      "Serverless",
+      "Lambda",
+      "Cost"
+    ]
+  },
   {
     "title": "Why I'm ditching EC2 for Lambda in 2025 (real cost comparison)",
     "date": "2026-01-04",

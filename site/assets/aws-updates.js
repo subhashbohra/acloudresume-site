@@ -20,7 +20,9 @@ const state = {
   siteBaseUrl: "https://acloudresume.com",
   page: 1,
   pageSize: 12,
+  weeksUrl: "",
   selectedWeek: ""
+  
 };
 
 const el = (id) => document.getElementById(id);
@@ -266,6 +268,10 @@ async function initFromConfig(){
       console.warn("site-config.json not found:", res.status);
       return;
     }
+    if (typeof c.weeksUrl === "string" && c.weeksUrl.trim()) {
+        state.weeksUrl = c.weeksUrl.trim().replace(/\/$/, "");
+    }
+
 
     const cfg = await res.json();
     const c = cfg?.awsUpdates || {};
@@ -290,6 +296,25 @@ async function initFromConfig(){
   }
 }
 
+async function selectLatestAvailableWeek(){
+  // if URL explicitly sets week, respect it
+  const urlWeek = new URLSearchParams(location.search).get("week");
+  if(urlWeek){
+    state.selectedWeek = urlWeek;
+    return;
+  }
+  if(!state.weeksUrl) return;
+
+  const res = await fetch(state.weeksUrl, { cache:"no-store" });
+  if(!res.ok) return;
+
+  const weeks = await res.json();
+  if(Array.isArray(weeks) && weeks.length){
+    state.selectedWeek = weeks[0]; // newest week
+  }
+}
+
+
 
 async function refresh(){
   try{
@@ -302,27 +327,52 @@ async function refresh(){
         throw new Error("API URL is empty. Set data/site-config.json");
       }
 
-      const wk =
-        state.selectedWeek ||
-        new URLSearchParams(location.search).get("week") ||
-        isoWeekKey(new Date());
-        state.selectedWeek = wk;  // ✅ ADD THIS LINE
-      const apiUrl = `${state.apiUrl}?week=${encodeURIComponent(wk)}`;
+    let apiUrl = state.apiUrl;
 
-      const res = await fetch(apiUrl, { cache:"no-store" });
+    // Prefer selected week; if none, call backend default (no week param)
+    const wk =
+      state.selectedWeek ||
+      new URLSearchParams(location.search).get("week") ||
+      "";
+
+    if (wk) {
+      state.selectedWeek = wk;
+      apiUrl = `${state.apiUrl}?week=${encodeURIComponent(wk)}`;
+    }
+
+    const res = await fetch(apiUrl, { cache:"no-store" });
+
       if(!res.ok){
         const txt = await res.text();
         throw new Error(`API error ${res.status}: ${txt}`);
       }
       data = await res.json();
-      // ✅ Force weekKey for rendering consistency even if backend doesn't return it or formats it differently
-      if (Array.isArray(data)) {
-        data = data.map(x => ({ ...x, weekKey: wk }));
-      } else if (data?.items && Array.isArray(data.items)) {
-        data.items = data.items.map(x => ({ ...x, weekKey: wk }));
-      }
+      
 
     }
+
+
+async function populateWeekSelect(){
+  const weekSelect = el("week-select");
+  if(!weekSelect) return;
+
+  // If weeksUrl available, fetch weeks list
+  if(state.weeksUrl){
+    const res = await fetch(state.weeksUrl, { cache:"no-store" });
+    if(res.ok){
+      const weeks = await res.json();
+      if(Array.isArray(weeks) && weeks.length){
+        weekSelect.innerHTML = "";
+        weeks.slice(0,30).forEach(key=>{
+          const opt = document.createElement("option");
+          opt.value = key;
+          opt.textContent = `${key} (${weekRangeLabel(key)})`;
+          weekSelect.appendChild(opt);
+        });
+      }
+    }
+  }
+}
 
 
     state.items = normalize(data);
@@ -385,11 +435,19 @@ function bindControls(){
 
 document.addEventListener("DOMContentLoaded", async ()=>{
   await initFromConfig();
+
   if (!state.apiUrl) {
     state.apiUrl = "https://ejlppub2ah.execute-api.us-east-1.amazonaws.com/prod/updates";
   }
+  if (!state.weeksUrl) {
+    state.weeksUrl = "https://ejlppub2ah.execute-api.us-east-1.amazonaws.com/prod/weeks";
+  }
+
+  await selectLatestAvailableWeek();
+  await populateWeekSelect();
 
   renderTabs();
   bindControls();
   await refresh();
 });
+

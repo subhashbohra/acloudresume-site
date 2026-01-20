@@ -2,6 +2,7 @@
   "awsUpdates": {
     "defaultSource": "api",
     "apiUrl": "https://ejlppub2ah.execute-api.us-east-1.amazonaws.com/prod/updates",
+    "weeksUrl": "https://ejlppub2ah.execute-api.us-east-1.amazonaws.com/prod/weeks",
     "siteBaseUrl": "https://acloudresume.com"
   }
 }
