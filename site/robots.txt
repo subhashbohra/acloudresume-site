@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Disallow admin or private areas (if any)
+# Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://acloudresume.com/sitemap.xml
+
+# Crawl-delay (optional, for rate limiting)
+Crawl-delay: 1

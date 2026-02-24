@@ -1,0 +1,233 @@
+[
+  {
+    "id": "lambda-api-gateway",
+    "title": "Build REST API with Lambda + API Gateway",
+    "description": "Create a serverless REST API in 10 minutes using AWS Lambda and API Gateway.",
+    "category": "Serverless",
+    "difficulty": "Beginner",
+    "duration": "10 min",
+    "tags": ["Lambda", "API Gateway", "Python"],
+    "content": "Learn to build a production-ready REST API without managing servers. We'll create a Lambda function, configure API Gateway, and test endpoints.",
+    "url": "tutorial-viewer.html?id=lambda-api-gateway"
+  },
+  {
+    "id": "s3-lambda-trigger",
+    "title": "Process S3 Uploads with Lambda",
+    "description": "Automatically process files uploaded to S3 using Lambda triggers.",
+    "category": "Serverless",
+    "difficulty": "Beginner",
+    "duration": "8 min",
+    "tags": ["Lambda", "S3", "Events"],
+    "content": "Build an automated file processing pipeline. Upload a file to S3, Lambda processes it automatically.",
+    "url": "tutorial-viewer.html?id=s3-lambda-trigger"
+  },
+  {
+    "id": "dynamodb-crud",
+    "title": "DynamoDB CRUD Operations",
+    "description": "Master DynamoDB operations with Python boto3 SDK.",
+    "category": "Serverless",
+    "difficulty": "Beginner",
+    "duration": "12 min",
+    "tags": ["DynamoDB", "Python", "NoSQL"],
+    "content": "Learn to create, read, update, and delete items in DynamoDB using Python.",
+    "url": "tutorial-viewer.html?id=dynamodb-crud"
+  },
+  {
+    "id": "eventbridge-scheduler",
+    "title": "Schedule Tasks with EventBridge",
+    "description": "Run Lambda functions on a schedule using EventBridge rules.",
+    "category": "Serverless",
+    "difficulty": "Beginner",
+    "duration": "7 min",
+    "tags": ["EventBridge", "Lambda", "Scheduler"],
+    "content": "Create scheduled tasks that run hourly, daily, or on custom cron expressions.",
+    "url": "tutorial-viewer.html?id=eventbridge-scheduler"
+  },
+  {
+    "id": "step-functions-workflow",
+    "title": "Build Workflows with Step Functions",
+    "description": "Orchestrate multiple Lambda functions into a workflow.",
+    "category": "Serverless",
+    "difficulty": "Intermediate",
+    "duration": "15 min",
+    "tags": ["Step Functions", "Lambda", "Workflow"],
+    "content": "Create complex workflows with error handling, retries, and parallel execution.",
+    "url": "tutorial-viewer.html?id=step-functions-workflow"
+  },
+  {
+    "id": "bedrock-text-generation",
+    "title": "Generate Text with Amazon Bedrock",
+    "description": "Use Claude or Titan models to generate AI-powered text.",
+    "category": "AI & GenAI",
+    "difficulty": "Beginner",
+    "duration": "8 min",
+    "tags": ["Bedrock", "GenAI", "Claude"],
+    "content": "Call Bedrock API to generate summaries, translations, and creative content.",
+    "url": "tutorial-viewer.html?id=bedrock-text-generation"
+  },
+  {
+    "id": "bedrock-chatbot",
+    "title": "Build a Chatbot with Bedrock",
+    "description": "Create a conversational AI chatbot using Amazon Bedrock.",
+    "category": "AI & GenAI",
+    "difficulty": "Intermediate",
+    "duration": "12 min",
+    "tags": ["Bedrock", "Chatbot", "Lambda"],
+    "content": "Build a serverless chatbot with conversation memory and context handling.",
+    "url": "tutorial-viewer.html?id=bedrock-chatbot"
+  },
+  {
+    "id": "rag-kendra-bedrock",
+    "title": "RAG with Kendra + Bedrock",
+    "description": "Build a knowledge-base chatbot using RAG architecture.",
+    "category": "AI & GenAI",
+    "difficulty": "Advanced",
+    "duration": "20 min",
+    "tags": ["RAG", "Kendra", "Bedrock"],
+    "content": "Combine document search with AI generation for accurate, grounded responses.",
+    "url": "tutorial-viewer.html?id=rag-kendra-bedrock"
+  },
+  {
+    "id": "prompt-engineering",
+    "title": "Prompt Engineering Essentials",
+    "description": "Master prompt design for better AI outputs.",
+    "category": "AI & GenAI",
+    "difficulty": "Beginner",
+    "duration": "10 min",
+    "tags": ["Prompts", "GenAI", "Best Practices"],
+    "content": "Learn techniques: few-shot learning, chain-of-thought, role prompting.",
+    "url": "tutorial-viewer.html?id=prompt-engineering"
+  },
+  {
+    "id": "bedrock-agents-basics",
+    "title": "Build AI Agents with Bedrock Agents",
+    "description": "Create autonomous AI agents that can use tools and APIs.",
+    "category": "Agentic AI",
+    "difficulty": "Intermediate",
+    "duration": "15 min",
+    "tags": ["Agents", "Bedrock", "Tools"],
+    "content": "Build an agent that can search databases, call APIs, and make decisions.",
+    "url": "tutorial-viewer.html?id=bedrock-agents-basics"
+  },
+  {
+    "id": "agent-with-knowledge-base",
+    "title": "AI Agent with Custom Knowledge Base",
+    "description": "Give your agent domain-specific knowledge using vector databases.",
+    "category": "Agentic AI",
+    "difficulty": "Advanced",
+    "duration": "18 min",
+    "tags": ["Agents", "Knowledge Base", "RAG"],
+    "content": "Create an agent that answers questions using your company's documents.",
+    "url": "tutorial-viewer.html?id=agent-with-knowledge-base"
+  },
+  {
+    "id": "multi-agent-system",
+    "title": "Build Multi-Agent Systems",
+    "description": "Orchestrate multiple AI agents working together.",
+    "category": "Agentic AI",
+    "difficulty": "Advanced",
+    "duration": "22 min",
+    "tags": ["Agents", "Orchestration", "Bedrock"],
+    "content": "Create specialized agents (researcher, writer, reviewer) that collaborate.",
+    "url": "tutorial-viewer.html?id=multi-agent-system"
+  },
+  {
+    "id": "agent-tool-use",
+    "title": "AI Agents with Custom Tools",
+    "description": "Teach agents to use external APIs and services.",
+    "category": "Agentic AI",
+    "difficulty": "Intermediate",
+    "duration": "14 min",
+    "tags": ["Agents", "Tools", "API"],
+    "content": "Build an agent that can check weather, send emails, and query databases.",
+    "url": "tutorial-viewer.html?id=agent-tool-use"
+  },
+  {
+    "id": "sam-template-basics",
+    "title": "AWS SAM Template Basics",
+    "description": "Define serverless infrastructure as code with SAM.",
+    "category": "DevOps",
+    "difficulty": "Beginner",
+    "duration": "10 min",
+    "tags": ["SAM", "IaC", "CloudFormation"],
+    "content": "Create Lambda functions, APIs, and DynamoDB tables using SAM YAML.",
+    "url": "tutorial-viewer.html?id=sam-template-basics"
+  },
+  {
+    "id": "cicd-codepipeline",
+    "title": "CI/CD with CodePipeline",
+    "description": "Automate deployments with AWS CodePipeline.",
+    "category": "DevOps",
+    "difficulty": "Intermediate",
+    "duration": "15 min",
+    "tags": ["CodePipeline", "CI/CD", "GitHub"],
+    "content": "Build a pipeline: GitHub → CodeBuild → Lambda deployment.",
+    "url": "tutorial-viewer.html?id=cicd-codepipeline"
+  },
+  {
+    "id": "cloudwatch-monitoring",
+    "title": "Monitor Lambda with CloudWatch",
+    "description": "Set up logs, metrics, and alarms for Lambda functions.",
+    "category": "DevOps",
+    "difficulty": "Beginner",
+    "duration": "8 min",
+    "tags": ["CloudWatch", "Monitoring", "Alarms"],
+    "content": "Track errors, latency, and set up alerts for production issues.",
+    "url": "tutorial-viewer.html?id=cloudwatch-monitoring"
+  },
+  {
+    "id": "python-lambda-basics",
+    "title": "Python Lambda Function Essentials",
+    "description": "Master Python Lambda development with best practices.",
+    "category": "Programming",
+    "difficulty": "Beginner",
+    "duration": "10 min",
+    "tags": ["Python", "Lambda", "boto3"],
+    "content": "Learn handler structure, environment variables, and boto3 SDK usage.",
+    "url": "tutorial-viewer.html?id=python-lambda-basics"
+  },
+  {
+    "id": "javascript-lambda-nodejs",
+    "title": "Node.js Lambda with AWS SDK",
+    "description": "Build Lambda functions using JavaScript and AWS SDK v3.",
+    "category": "Programming",
+    "difficulty": "Beginner",
+    "duration": "10 min",
+    "tags": ["JavaScript", "Node.js", "Lambda"],
+    "content": "Use async/await, handle promises, and work with DynamoDB in Node.js.",
+    "url": "tutorial-viewer.html?id=javascript-lambda-nodejs"
+  },
+  {
+    "id": "java-lambda-spring",
+    "title": "Java Lambda with Spring Boot",
+    "description": "Build enterprise Lambda functions using Java and Spring.",
+    "category": "Programming",
+    "difficulty": "Intermediate",
+    "duration": "18 min",
+    "tags": ["Java", "Spring Boot", "Lambda"],
+    "content": "Use Spring Cloud Function to build production-grade Java Lambdas.",
+    "url": "tutorial-viewer.html?id=java-lambda-spring"
+  },
+  {
+    "id": "python-async-lambda",
+    "title": "Async Python in Lambda",
+    "description": "Use asyncio for concurrent operations in Lambda.",
+    "category": "Programming",
+    "difficulty": "Intermediate",
+    "duration": "12 min",
+    "tags": ["Python", "Async", "Performance"],
+    "content": "Speed up Lambda functions with async/await and concurrent API calls.",
+    "url": "tutorial-viewer.html?id=python-async-lambda"
+  },
+  {
+    "id": "typescript-lambda-cdk",
+    "title": "TypeScript Lambda with AWS CDK",
+    "description": "Build type-safe Lambda functions using TypeScript and CDK.",
+    "category": "Programming",
+    "difficulty": "Intermediate",
+    "duration": "15 min",
+    "tags": ["TypeScript", "CDK", "Lambda"],
+    "content": "Use TypeScript for both infrastructure and Lambda code.",
+    "url": "tutorial-viewer.html?id=typescript-lambda-cdk"
+  }
+]

@@ -1,0 +1,95 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: OAuth Authentication Service
+
+Parameters:
+  UsersTableName:
+    Type: String
+    Default: acloudresume-users
+  GoogleClientId:
+    Type: String
+    Description: Google OAuth Client ID
+  GoogleClientSecret:
+    Type: String
+    Description: Google OAuth Client Secret
+    NoEcho: true
+  GitHubClientId:
+    Type: String
+    Description: GitHub OAuth Client ID
+  GitHubClientSecret:
+    Type: String
+    Description: GitHub OAuth Client Secret
+    NoEcho: true
+  LinkedInClientId:
+    Type: String
+    Description: LinkedIn OAuth Client ID
+  LinkedInClientSecret:
+    Type: String
+    Description: LinkedIn OAuth Client Secret
+    NoEcho: true
+  SiteBaseUrl:
+    Type: String
+    Default: https://acloudresume.com
+
+Resources:
+  UsersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref UsersTableName
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: EmailIndex
+          KeySchema:
+            - AttributeName: email
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+  AuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: auth_function/
+      Handler: app.lambda_handler
+      Runtime: python3.13
+      Timeout: 30
+      MemorySize: 512
+      Environment:
+        Variables:
+          USERS_TABLE: !Ref UsersTable
+          GOOGLE_CLIENT_ID: !Ref GoogleClientId
+          GOOGLE_CLIENT_SECRET: !Ref GoogleClientSecret
+          GITHUB_CLIENT_ID: !Ref GitHubClientId
+          GITHUB_CLIENT_SECRET: !Ref GitHubClientSecret
+          LINKEDIN_CLIENT_ID: !Ref LinkedInClientId
+          LINKEDIN_CLIENT_SECRET: !Ref LinkedInClientSecret
+          SITE_BASE_URL: !Ref SiteBaseUrl
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UsersTable
+      Events:
+        AuthCallback:
+          Type: HttpApi
+          Properties:
+            Path: /auth/callback
+            Method: GET
+        UserCount:
+          Type: HttpApi
+          Properties:
+            Path: /auth/count
+            Method: GET
+
+Outputs:
+  AuthApiUrl:
+    Description: OAuth API URL
+    Value: !Sub 'https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com'
+  UsersTableName:
+    Description: Users DynamoDB Table
+    Value: !Ref UsersTable

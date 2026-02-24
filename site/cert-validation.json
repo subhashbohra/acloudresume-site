@@ -1,0 +1,30 @@
+{
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "_8bbf735796da8a746656759b93d069bc.acloudresume.com",
+        "Type": "CNAME",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "_f592075beb840af5061f58f85ea124db.wmmlzlpmyg.acm-validations.aws"
+          }
+        ]
+      }
+    },
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "_70d50267e3f67d7d540fded84edf02d1.www.acloudresume.com",
+        "Type": "CNAME",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "_0bc67ad34b8ca6bbba462baeb95efd39.gtjzbhhwqc.acm-validations.aws"
+          }
+        ]
+      }
+    }
+  ]
+}

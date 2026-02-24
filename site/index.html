@@ -1,20 +1,62 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>aCloudResume | Subhash Bohra</title>
-  <meta name="description" content="Cloud + DevOps + Serverless builder. AWS Community Builder (Serverless). Kubernetes, CI/CD, Observability and AI automation." />
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>aCloudResume | Subhash Bohra - AWS Cloud Architect & Serverless Expert</title>
+  <meta name="description" content="AWS Community Builder specializing in Serverless, DevOps, Kubernetes, CI/CD, and GenAI automation. Free AWS tutorials, weekly updates, and cloud architecture insights." />
+  <meta name="keywords" content="AWS, Serverless, Lambda, DevOps, Kubernetes, Cloud Architecture, AWS Community Builder, GenAI, Bedrock, CI/CD" />
+  <meta name="author" content="Subhash Bohra" />
   <meta name="theme-color" content="#111827" />
-  <link rel="icon" href="favicon.ico" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://acloudresume.com/" />
+  <meta property="og:title" content="aCloudResume | AWS Cloud Architect & Serverless Expert" />
+  <meta property="og:description" content="AWS Community Builder specializing in Serverless, DevOps, Kubernetes, and GenAI automation. Free tutorials and weekly AWS updates." />
+  <meta property="og:image" content="https://acloudresume.com/images/og-image.jpg" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://acloudresume.com/" />
+  <meta property="twitter:title" content="aCloudResume | AWS Cloud Architect" />
+  <meta property="twitter:description" content="AWS Community Builder - Serverless, DevOps, Kubernetes, GenAI" />
+  <meta property="twitter:image" content="https://acloudresume.com/images/og-image.jpg" />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://acloudresume.com/" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2" />
+  <link rel="alternate icon" href="favicon.ico" />
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com" />
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root{--aws-orange:#FF9900;--aws-slate:#232F3E;--aws-blue:#146EB4;}
     body{background: linear-gradient(180deg,#f8fafc 0%, #ffffff 45%, #f8fafc 100%);}
     .glass{background: rgba(255,255,255,.75); backdrop-filter: blur(10px);}
   </style>
-
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Subhash Bohra",
+    "url": "https://acloudresume.com",
+    "jobTitle": "AWS Cloud Architect",
+    "description": "AWS Community Builder specializing in Serverless, DevOps, and Kubernetes",
+    "sameAs": [
+      "https://www.linkedin.com/in/subhashbohra",
+      "https://github.com/subhashbohra"
+    ],
+    "knowsAbout": ["AWS", "Serverless", "Lambda", "Kubernetes", "DevOps", "CI/CD", "GenAI", "Cloud Architecture"]
+  }
+  </script>
 </head>
 <body class="text-slate-900">
 
@@ -27,6 +69,7 @@
         <nav class="hidden md:flex items-center gap-2 text-sm">
           <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="blog.html">Blog</a>
           <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="aws-updates.html">AWS Weekly Updates</a>
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="tutorials.html">Tutorials</a>
           <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="#projects">Projects</a>
           <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="#contact">Contact</a>
           <a class="ml-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-white font-semibold shadow-sm"
@@ -57,20 +100,26 @@
         </p>
 
         <div class="mt-6 flex flex-wrap gap-3">
-          <a href="aws-updates.html" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-white font-semibold shadow-sm" style="background: var(--aws-slate)">
+          <a href="tutorials.html" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-white font-semibold shadow-sm" style="background: var(--aws-slate)">
+            Free Tutorials <span aria-hidden="true">→</span>
+          </a>
+          <a href="aws-updates.html" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-slate-200 bg-white font-semibold hover:bg-slate-50">
             AWS Weekly Updates <span aria-hidden="true">→</span>
           </a>
           <a href="blog.html" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-slate-200 bg-white font-semibold hover:bg-slate-50">
             Read blog <span aria-hidden="true">→</span>
           </a>
-          <a href="#projects" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-slate-200 bg-white font-semibold hover:bg-slate-50">
-            View projects
-          </a>
         </div>
 
         <div class="mt-6 flex items-center gap-3 text-sm text-slate-600">
-          <div class="px-3 py-2 rounded-2xl border border-slate-200 bg-white">
-            Visitors: <span id="visitorCount" class="font-semibold">—</span>
+          <div class="px-4 py-2.5 rounded-2xl border-2 border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">👥</span>
+              <div>
+                <div class="text-xs text-slate-500 font-medium">Total Visitors</div>
+                <div class="text-lg font-bold" style="color: var(--aws-orange)" id="visitorCount">2,000+</div>
+              </div>
+            </div>
           </div>
           <a class="px-3 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50" href="https://github.com/subhashbohra" target="_blank" rel="noreferrer">
             GitHub
@@ -200,17 +249,22 @@
 </script>
 <script src="js/visitor.js"></script>
 <script src="js/home.js"></script>
+<script src="js/register.js"></script>
 
 
   <footer class="mt-16 border-t border-slate-200">
     <div class="max-w-6xl mx-auto px-4 py-10 text-sm text-slate-600 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
       <div>© <span id="year"></span> aCloudResume · Built on AWS (S3 + CloudFront) · Serverless-first</div>
       <div class="flex items-center gap-3">
+        <a class="hover:underline" href="tutorials.html">Tutorials</a>
+        <span class="text-slate-300">•</span>
         <a class="hover:underline" href="https://www.linkedin.com/in/subhashbohra" target="_blank" rel="noreferrer">LinkedIn</a>
         <span class="text-slate-300">•</span>
         <a class="hover:underline" href="https://github.com/subhashbohra" target="_blank" rel="noreferrer">GitHub</a>
         <span class="text-slate-300">•</span>
         <a class="hover:underline" href="aws-updates.html">AWS Weekly Updates</a>
+        <span class="text-slate-300">•</span>
+        <button id="register-btn" class="hover:underline font-semibold" style="color: var(--aws-orange)">Register</button>
       </div>
     </div>
     <script>document.getElementById('year').textContent = new Date().getFullYear();</script>

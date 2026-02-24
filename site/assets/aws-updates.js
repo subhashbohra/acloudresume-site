@@ -86,12 +86,6 @@ function normalize(data){
   const arr = Array.isArray(data) ? data : (data?.items || []);
   return (arr||[]).map(x=>{
     let publishedAt = x.publishedAt || x.published_at || x.date || new Date().toISOString();
-    // clamp future dates if backend bugged
-    try{
-      if(new Date(publishedAt).getTime() > Date.now() + 5*60*1000){
-        publishedAt = new Date().toISOString();
-      }
-    }catch(e){}
     const wk = x.weekKey || x.week_key || isoWeekKey(new Date(publishedAt));
     return {
       title: x.title || "",
@@ -152,9 +146,12 @@ function cardHtml(it){
   const canonical = canonicalUrlFor(it);
   const share = buildShareLinks(canonical);
 
-  const img = it.imageUrl
-    ? `<img src="${it.imageUrl}" alt="${safe(it.title)}" class="w-full h-44 object-cover rounded-xl border border-slate-100" loading="lazy" />`
-    : `<img src="assets/sample-card.svg" alt="AWS Weekly Updates" class="w-full h-44 object-cover rounded-xl border border-slate-100" loading="lazy" />`;
+  // Generate unique image based on category and title
+  const imageUrl = it.imageUrl || generateCategoryImage(it.category, it.title);
+  
+  const img = `<div class="relative w-full h-44 rounded-xl overflow-hidden border border-slate-100">
+    <img src="${imageUrl}" alt="${safe(it.title)}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/400x176/232F3E/FF9900?text=AWS+Update'" />
+  </div>`;
 
   const tags = (it.tags||[]).slice(0,4).map(t=>`<span class="text-xs px-2 py-1 rounded-lg bg-slate-100 text-slate-700">${safe(t)}</span>`).join("");
 
@@ -165,17 +162,102 @@ function cardHtml(it){
       ${categoryBadge(it.category)}
       <span class="text-xs text-slate-500">${fmtDate(it.publishedAt)}</span>
     </div>
-    <h3 class="text-lg font-semibold leading-snug">${safe(it.title)}</h3>
-    <p class="text-sm text-slate-600">${safe(it.summary||"")}</p>
+    <h3 class="text-base md:text-lg font-semibold leading-snug line-clamp-2">${safe(it.title)}</h3>
+    <p class="text-sm text-slate-600 line-clamp-2">${safe(it.summary||"")}</p>
     <div class="flex flex-wrap gap-2">${tags}</div>
-    <div class="mt-1 flex items-center justify-between gap-3">
-      <a href="${it.link || "#"}" target="_blank" rel="noreferrer" class="hover:underline" style="color: var(--aws-orange); font-weight:600;">Official →</a>
+    <div class="mt-auto flex items-center justify-between gap-3">
+      <a href="${it.link || "#"}" target="_blank" rel="noreferrer" class="text-sm hover:underline" style="color: var(--aws-orange); font-weight:600;">Official →</a>
       <div class="flex items-center gap-2 text-xs">
         <a href="${share.linkedin}" target="_blank" rel="noreferrer" class="px-2 py-1 rounded-lg border border-slate-200 hover:bg-slate-50">LinkedIn</a>
         <a href="${share.x}" target="_blank" rel="noreferrer" class="px-2 py-1 rounded-lg border border-slate-200 hover:bg-slate-50">X</a>
       </div>
     </div>
   </article>`;
+}
+
+function generateCategoryImage(category, title){
+  // Multiple images per category for variety
+  const categoryImages = {
+    'Serverless': [
+      'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1639322537228-f710d846310a?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=176&fit=crop&q=80'
+    ],
+    'AI & GenAI': [
+      'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1676277791608-ac5c30d8f6a8?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=176&fit=crop&q=80'
+    ],
+    'AI Agents': [
+      'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1655393001768-d946c97d6fd1?w=400&h=176&fit=crop&q=80'
+    ],
+    'DevOps & Observability': [
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=400&h=176&fit=crop&q=80'
+    ],
+    'Containers & Kubernetes': [
+      'https://images.unsplash.com/photo-1605745341112-85968b19335b?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1667372335937-d03be6fb0a9c?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1667372393086-9d4001d51cf1?w=400&h=176&fit=crop&q=80'
+    ],
+    'Security': [
+      'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=176&fit=crop&q=80'
+    ],
+    'Data & Analytics': [
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?w=400&h=176&fit=crop&q=80'
+    ],
+    'Databases': [
+      'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1666875753105-c63a6f3bdc86?w=400&h=176&fit=crop&q=80'
+    ],
+    'Storage': [
+      'https://images.unsplash.com/photo-1597852074816-d933c7d2b988?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1600267185393-e158a98703de?w=400&h=176&fit=crop&q=80'
+    ],
+    'Networking': [
+      'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1516192518150-0d8fee5425e3?w=400&h=176&fit=crop&q=80'
+    ],
+    'Other': [
+      'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=176&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=176&fit=crop&q=80'
+    ]
+  };
+  
+  // Get images for category
+  const images = categoryImages[category] || categoryImages['Other'];
+  
+  // Use title hash to consistently select same image for same update
+  let hash = 0;
+  for(let i = 0; i < title.length; i++) {
+    hash = ((hash << 5) - hash) + title.charCodeAt(i);
+    hash = hash & hash;
+  }
+  
+  const index = Math.abs(hash) % images.length;
+  return images[index];
 }
 
 function weeklySummaryText(items, wk){
@@ -268,10 +350,6 @@ async function initFromConfig(){
       console.warn("site-config.json not found:", res.status);
       return;
     }
-    if (typeof c.weeksUrl === "string" && c.weeksUrl.trim()) {
-        state.weeksUrl = c.weeksUrl.trim().replace(/\/$/, "");
-    }
-
 
     const cfg = await res.json();
     const c = cfg?.awsUpdates || {};
@@ -282,13 +360,15 @@ async function initFromConfig(){
     }
 
     if (typeof c.apiUrl === "string" && c.apiUrl.trim()) {
-      state.apiUrl = c.apiUrl.trim().replace(/\/$/, ""); // keep clean
+      state.apiUrl = c.apiUrl.trim().replace(/\/$/, "");
     }
 
-    // In production, force API mode
+    if (typeof c.weeksUrl === "string" && c.weeksUrl.trim()) {
+      state.weeksUrl = c.weeksUrl.trim().replace(/\/$/, "");
+    }
+
     state.source = "api";
 
-    // Optional: keep hidden input synced (if you kept it)
     const apiInput = el("api-url");
     if (apiInput) apiInput.value = state.apiUrl || "";
   } catch (e) {
@@ -316,6 +396,31 @@ async function selectLatestAvailableWeek(){
 
 
 
+async function populateWeekSelect(){
+  const weekSelect = el("week-select");
+  if(!weekSelect) return;
+
+  if(state.weeksUrl){
+    try{
+      const res = await fetch(state.weeksUrl, { cache:"no-store" });
+      if(res.ok){
+        const weeks = await res.json();
+        if(Array.isArray(weeks) && weeks.length){
+          weekSelect.innerHTML = "";
+          weeks.slice(0,30).forEach(key=>{
+            const opt = document.createElement("option");
+            opt.value = key;
+            opt.textContent = `${key} (${weekRangeLabel(key)})`;
+            weekSelect.appendChild(opt);
+          });
+        }
+      }
+    }catch(e){
+      console.error("populateWeekSelect failed:", e);
+    }
+  }
+}
+
 async function refresh(){
   try{
     const btn = el("btn-refresh");
@@ -327,53 +432,23 @@ async function refresh(){
         throw new Error("API URL is empty. Set data/site-config.json");
       }
 
-    let apiUrl = state.apiUrl;
+      let apiUrl = state.apiUrl;
 
-    // Prefer selected week; if none, call backend default (no week param)
-    const wk =
-      state.selectedWeek ||
-      new URLSearchParams(location.search).get("week") ||
-      "";
+      const wk = state.selectedWeek || new URLSearchParams(location.search).get("week") || "";
 
-    if (wk) {
-      state.selectedWeek = wk;
-      apiUrl = `${state.apiUrl}?week=${encodeURIComponent(wk)}`;
-    }
+      if (wk) {
+        state.selectedWeek = wk;
+        apiUrl = `${state.apiUrl}?week=${encodeURIComponent(wk)}`;
+      }
 
-    const res = await fetch(apiUrl, { cache:"no-store" });
+      const res = await fetch(apiUrl, { cache:"no-store" });
 
       if(!res.ok){
         const txt = await res.text();
         throw new Error(`API error ${res.status}: ${txt}`);
       }
       data = await res.json();
-      
-
     }
-
-
-async function populateWeekSelect(){
-  const weekSelect = el("week-select");
-  if(!weekSelect) return;
-
-  // If weeksUrl available, fetch weeks list
-  if(state.weeksUrl){
-    const res = await fetch(state.weeksUrl, { cache:"no-store" });
-    if(res.ok){
-      const weeks = await res.json();
-      if(Array.isArray(weeks) && weeks.length){
-        weekSelect.innerHTML = "";
-        weeks.slice(0,30).forEach(key=>{
-          const opt = document.createElement("option");
-          opt.value = key;
-          opt.textContent = `${key} (${weekRangeLabel(key)})`;
-          weekSelect.appendChild(opt);
-        });
-      }
-    }
-  }
-}
-
 
     state.items = normalize(data);
     applyFilters();
@@ -399,18 +474,47 @@ function bindControls(){
 
   el("btn-refresh")?.addEventListener("click", refresh);
 
- 
-
-  el("api-url")?.addEventListener("input",(e)=>{ state.apiUrl = e.target.value.trim(); });
-
-  el("week-select")?.addEventListener("change",(e)=>{
+  el("week-select")?.addEventListener("change", async (e)=>{
     state.selectedWeek = e.target.value;
-    renderAll();
+    await refresh();
+  });
+
+  el("btn-prev")?.addEventListener("click", async ()=>{
+    const weeks = Array.from(el("week-select")?.options || []).map(o=>o.value);
+    const idx = weeks.indexOf(state.selectedWeek);
+    if(idx < weeks.length - 1){
+      state.selectedWeek = weeks[idx + 1];
+      el("week-select").value = state.selectedWeek;
+      await refresh();
+    }
+  });
+
+  el("btn-next")?.addEventListener("click", async ()=>{
+    const weeks = Array.from(el("week-select")?.options || []).map(o=>o.value);
+    const idx = weeks.indexOf(state.selectedWeek);
+    if(idx > 0){
+      state.selectedWeek = weeks[idx - 1];
+      el("week-select").value = state.selectedWeek;
+      await refresh();
+    }
+  });
+
+  el("btn-share-week")?.addEventListener("click", ()=>{
+    const wk = state.selectedWeek || isoWeekKey(new Date());
+    const url = `${state.siteBaseUrl}/aws-updates.html?week=${encodeURIComponent(wk)}`;
+    navigator.clipboard.writeText(url).then(()=>{
+      const b = el("btn-share-week");
+      if(b){
+        const old = b.textContent;
+        b.textContent = "Copied!";
+        setTimeout(()=>{ b.textContent = old; }, 1000);
+      }
+    }).catch(()=>alert("Copy failed"));
   });
 
   el("btn-generate-weekly")?.addEventListener("click", ()=>{
-    const wk = state.selectedWeek || new URLSearchParams(location.search).get("week") || isoWeekKey(new Date());
-    const items = state.filtered.length ? state.filtered : state.items;
+    const wk = state.selectedWeek || isoWeekKey(new Date());
+    const items = state.items;
     const out = el("weekly-output");
     if(out) out.value = weeklySummaryText(items, wk);
   });

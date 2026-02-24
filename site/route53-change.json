@@ -1,0 +1,17 @@
+{
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "www.acloudresume.com",
+        "Type": "CNAME",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "d2ersoczn4pcq4.cloudfront.net"
+          }
+        ]
+      }
+    }
+  ]
+}

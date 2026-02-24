@@ -18,11 +18,38 @@ Parameters:
   ImageModelId:
     Type: String
     Default: amazon.titan-image-generator-v1
+  GoogleClientId:
+    Type: String
+    Description: Google OAuth Client ID
+    Default: ''
+  GoogleClientSecret:
+    Type: String
+    Description: Google OAuth Client Secret
+    NoEcho: true
+    Default: ''
+  GitHubClientId:
+    Type: String
+    Description: GitHub OAuth Client ID
+    Default: ''
+  GitHubClientSecret:
+    Type: String
+    Description: GitHub OAuth Client Secret
+    NoEcho: true
+    Default: ''
+  LinkedInClientId:
+    Type: String
+    Description: LinkedIn OAuth Client ID
+    Default: ''
+  LinkedInClientSecret:
+    Type: String
+    Description: LinkedIn OAuth Client Secret
+    NoEcho: true
+    Default: ''
 Globals:
   Function:
     Runtime: python3.13
-    Timeout: 30
-    MemorySize: 512
+    Timeout: 300
+    MemorySize: 1024
     Tracing: Active
     Environment:
       Variables:
@@ -50,6 +77,8 @@ Resources:
         AllowMethods: '''GET,POST,OPTIONS'''
         AllowHeaders: '''Content-Type,Authorization'''
         AllowOrigin: '''*'''
+      Auth:
+        ApiKeyRequired: false
   AwsUpdatesTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -73,6 +102,16 @@ Resources:
         AttributeType: S
       KeySchema:
       - AttributeName: path
+        KeyType: HASH
+  UsersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+      - AttributeName: userId
+        AttributeType: S
+      KeySchema:
+      - AttributeName: userId
         KeyType: HASH
   FetchRssFunction:
     Type: AWS::Serverless::Function

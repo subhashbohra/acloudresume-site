@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Tutorial | aCloudResume</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.svg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root{--aws-orange:#FF9900;--aws-slate:#232F3E;--aws-blue:#146EB4;}
+    body{background: linear-gradient(180deg,#f8fafc 0%, #ffffff 45%, #f8fafc 100%);}
+    pre{border-radius:12px;padding:1rem;overflow-x:auto;}
+    .mermaid{background:white;border-radius:12px;padding:1rem;}
+  </style>
+</head>
+<body class="text-slate-900">
+
+  <header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/70 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="h-16 flex items-center justify-between">
+        <a href="index.html" class="font-extrabold tracking-tight text-slate-900">
+          aCloudResume <span class="text-slate-400 font-semibold">/</span> <span class="text-slate-700">Subhash Bohra</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-2 text-sm">
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="blog.html">Blog</a>
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="aws-updates.html">AWS Weekly Updates</a>
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="tutorials.html">Tutorials</a>
+          <a class="px-3 py-2 rounded-xl hover:bg-slate-100" href="#contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+<main class="max-w-4xl mx-auto px-4 py-10">
+  <div id="tutorial-content">
+    <div class="text-center py-20">
+      <div class="text-lg font-semibold">Loading tutorial...</div>
+    </div>
+  </div>
+</main>
+
+<script src="js/tutorial-content.js?v=2"></script>
+<script>
+mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
+
+function renderTutorial(id){
+  const tutorial = window.TUTORIALS[id];
+  if(!tutorial){
+    document.getElementById('tutorial-content').innerHTML = `
+      <div class="text-center py-20">
+        <div class="text-lg font-semibold">Tutorial Coming Soon</div>
+        <p class="mt-2 text-slate-600">This tutorial is being prepared. Check back soon!</p>
+        <a href="tutorials.html" class="mt-4 inline-block px-4 py-2 rounded-xl text-white font-semibold" style="background: var(--aws-slate)">← Back to Tutorials</a>
+      </div>`;
+    return;
+  }
+
+  const diffColors = {
+    "Beginner": "bg-green-50 text-green-700 border-green-200",
+    "Intermediate": "bg-blue-50 text-blue-700 border-blue-200",
+    "Advanced": "bg-orange-50 text-orange-700 border-orange-200"
+  };
+
+  let html = `
+    <div class="mb-8">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm border ${diffColors[tutorial.difficulty]}">${tutorial.difficulty}</span>
+        <span class="text-sm text-slate-600">⏱️ ${tutorial.duration}</span>
+      </div>
+      <h1 class="text-4xl font-extrabold tracking-tight">${tutorial.title}</h1>
+      <p class="mt-3 text-lg text-slate-600">${tutorial.description}</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-white rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-bold mb-3">📚 What You'll Learn</h3>
+        <ul class="space-y-2 text-sm text-slate-700">
+          ${tutorial.whatYouLearn.map(item => `<li>✅ ${item}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-bold mb-3">🎯 Skills Improved</h3>
+        <div class="flex flex-wrap gap-2">
+          ${tutorial.skillsImproved.map(skill => `<span class="text-xs px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50">${skill}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-8 bg-white rounded-2xl border border-slate-200 p-6">
+      <h2 class="text-2xl font-bold mb-4">Architecture</h2>
+      <div class="mermaid">${tutorial.architecture}</div>
+    </div>
+
+    <div class="mb-8 bg-white rounded-2xl border border-slate-200 p-6">
+      ${tutorial.intro}
+    </div>`;
+
+  tutorial.steps.forEach(step => {
+    html += `
+      <div class="mb-8 bg-white rounded-2xl border border-slate-200 p-6">
+        <h2 class="text-2xl font-bold mb-3">${step.title}</h2>
+        <p class="text-slate-700 mb-4">${step.content}</p>
+        <pre><code class="language-${step.language}">${step.code}</code></pre>
+      </div>`;
+  });
+
+  html += `
+    <div class="mt-10 flex items-center gap-3">
+      <a href="tutorials.html" class="px-4 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">← Back to Tutorials</a>
+      <button onclick="shareLinkedIn()" class="px-4 py-2 rounded-xl text-white font-semibold" style="background: var(--aws-slate)">Share on LinkedIn</button>
+    </div>`;
+
+  document.getElementById('tutorial-content').innerHTML = html;
+  document.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block));
+  mermaid.run();
+}
+
+function shareLinkedIn(){
+  const url = window.location.href;
+  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+}
+
+const params = new URLSearchParams(window.location.search);
+const tutorialId = params.get('id');
+renderTutorial(tutorialId);
+</script>
+
+</body>
+</html>

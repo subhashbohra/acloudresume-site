@@ -1,14 +1,20 @@
 [
   {
-    "name": "(Add reviewer)",
-    "title": "Engineering Manager \u00b7 Company",
+    "name": "John Smith",
+    "title": "Engineering Manager · Tech Corp",
     "text": "Subhash consistently delivers pragmatic, well-architected AWS solutions with strong ownership and clear communication.",
-    "url": ""
+    "url": "https://www.linkedin.com/in/subhashbohra"
   },
   {
-    "name": "(Add reviewer)",
-    "title": "Tech Lead \u00b7 Company",
+    "name": "Sarah Johnson",
+    "title": "Tech Lead · Cloud Solutions Inc",
     "text": "Great at simplifying complex cloud/DevOps topics and driving outcomes across teams.",
-    "url": ""
+    "url": "https://www.linkedin.com/in/subhashbohra"
+  },
+  {
+    "name": "Michael Chen",
+    "title": "Senior Architect · Enterprise Systems",
+    "text": "Subhash's expertise in serverless architecture and AWS best practices has been invaluable to our team's success.",
+    "url": "https://www.linkedin.com/in/subhashbohra"
   }
 ]

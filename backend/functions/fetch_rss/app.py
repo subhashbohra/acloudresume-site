@@ -3,13 +3,10 @@ import boto3
 from xml.etree import ElementTree as ET
 
 ddb = boto3.resource("dynamodb")
-sqs = boto3.client("sqs")
 bedrock = boto3.client("bedrock-runtime")
 
 UPDATES_TABLE = os.environ["UPDATES_TABLE"]
 RSS_FEED_URL = os.environ["RSS_FEED_URL"]
-SQS_IMAGE_QUEUE_URL = os.environ["SQS_IMAGE_QUEUE_URL"]
-
 SITE_BASE_URL = os.environ.get("SITE_BASE_URL", "https://acloudresume.com").rstrip("/")
 TEXT_MODEL_ID = os.environ.get("TEXT_MODEL_ID", "amazon.titan-text-express-v1")
 GENERATE_SUMMARY = os.environ.get("GENERATE_SUMMARY", "true").lower() == "true"
@@ -102,12 +99,6 @@ def parse_rss(xml_bytes: bytes) -> list[dict]:
         })
     return items
 
-def enqueue_image_job(week_key: str, update_id: str):
-    sqs.send_message(
-        QueueUrl=SQS_IMAGE_QUEUE_URL,
-        MessageBody=json.dumps({"weekKey": week_key, "updateId": update_id})
-    )
-
 def lambda_handler(event, context):
     table = ddb.Table(UPDATES_TABLE)
 
@@ -116,7 +107,6 @@ def lambda_handler(event, context):
 
     items = parse_rss(xml_bytes)
     upserts = 0
-    enqueued = 0
 
     for it in items:
         week_key = it["weekKey"]
@@ -126,12 +116,12 @@ def lambda_handler(event, context):
         existing = table.get_item(Key={"weekKey": week_key, "updateId": update_id}).get("Item")
         summary = (existing or {}).get("summary", "")
         image_url = (existing or {}).get("imageUrl", "")
-        is_new = existing is None
 
         if GENERATE_SUMMARY and not summary:
             try:
                 summary = summarize_with_titan(it["title"], it["link"], category)
-            except Exception:
+            except Exception as e:
+                print(f"Summary generation failed: {e}")
                 summary = ""
 
         table.put_item(Item={
@@ -144,17 +134,8 @@ def lambda_handler(event, context):
             "tags": it.get("rawCategories", [])[:8],
             "summary": summary,
             "imageUrl": image_url or "",
-            "imageStatus": (existing or {}).get("imageStatus", "PENDING" if is_new else "PENDING" if not image_url else "DONE"),
             "source": "aws-whats-new-rss"
         })
         upserts += 1
 
-        # enqueue image gen for new items or missing image
-        if is_new or not image_url:
-            try:
-                enqueue_image_job(week_key, update_id)
-                enqueued += 1
-            except Exception:
-                pass
-
-    return {"statusCode": 200, "body": json.dumps({"count": upserts, "enqueued": enqueued})}
+    return {"statusCode": 200, "body": json.dumps({"count": upserts})}

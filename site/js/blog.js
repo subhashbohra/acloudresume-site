@@ -5,6 +5,24 @@ async function loadJSON(path){
   return await res.json();
 }
 
+async function fetchDevToPosts(username){
+  try{
+    const res = await fetch(`https://dev.to/api/articles?username=${username}`, {cache:"no-store"});
+    if(!res.ok) return [];
+    const articles = await res.json();
+    return articles.slice(0,6).map(a=>({
+      title: a.title,
+      date: new Date(a.published_at).toISOString().split('T')[0],
+      description: a.description || a.title,
+      url: a.url,
+      tags: a.tag_list.slice(0,4)
+    }));
+  }catch(e){
+    console.error('Dev.to fetch failed:', e);
+    return [];
+  }
+}
+
 function cardPost(p){
   const tags = (p.tags||[]).slice(0,4).map(t=>`<span class="text-xs px-2 py-1 rounded-lg bg-slate-100 text-slate-700">${t}</span>`).join("");
   const host = (p.url||"").includes("dev.to") ? "Dev.to" : "Website";
@@ -35,7 +53,7 @@ function cardReview(r){
         <div class="text-xs text-slate-500">${r.title||""}</div>
       </div>
     </div>
-    <p class="mt-3 text-sm text-slate-700 leading-relaxed">“${r.text||""}”</p>
+    <p class="mt-3 text-sm text-slate-700 leading-relaxed">"${r.text||""}"</p>
     ${r.url ? `<a class="mt-3 inline-block text-sm hover:underline" style="color: var(--aws-blue)" href="${r.url}" target="_blank" rel="noreferrer">View on LinkedIn →</a>` : ""}
   </div>`;
 }
@@ -43,8 +61,14 @@ function cardReview(r){
 (async function(){
   const postsWrap = document.getElementById("posts");
   const reviewsWrap = document.getElementById("reviews");
-  const posts = await loadJSON("data/posts.json");
+  
+  // Try Dev.to API first, fallback to JSON
+  let posts = await fetchDevToPosts("subhashbohra");
+  if(posts.length === 0){
+    posts = await loadJSON("data/posts.json");
+  }
   postsWrap.innerHTML = posts.map(cardPost).join("");
+  
   const reviews = await loadJSON("data/linkedin-reviews.json");
   reviewsWrap.innerHTML = reviews.map(cardReview).join("");
 })();
